@@ -1,0 +1,19 @@
+# Files
+.gitignore
+.coverage
+.dvcignore
+.pre-commit-config.yaml
+mypy.ini
+.ruff.toml
+dataset.dvc
+README.md
+runner.py
+requirements.txt
+Makefile
+
+# Folder
+architecture/
+notebpooks/
+statics/
+.dvc/
+trainer/

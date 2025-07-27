@@ -1,0 +1,62 @@
+services:
+
+  # 🟢 API FastAPI
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: api_service
+    ports:
+      - "8000:8000"
+    environment:
+      - PYTHONUNBUFFERED=1
+      - POETRY_VIRTUALENVS_CREATE=false
+    volumes:
+      - ./api:/app/api  # Développement live (facultatif)
+    depends_on:
+      - mlflow
+      - prometheus
+    command: >
+      uvicorn api.main:app --host 0.0.0.0 --port 8000
+
+  # 🟣 MLflow Tracking Server
+  mlflow:
+    image: ghcr.io/mlflow/mlflow:v2.12.1
+    container_name: mlflow
+    ports:
+      - "5000:5000"
+    environment:
+      - MLFLOW_TRACKING_URI=http://mlflow:5000
+    volumes:
+      - ./mlruns:/mlflow/mlruns
+    command: >
+      mlflow server --backend-store-uri sqlite:///mlflow.db --default-artifact-root /mlflow/mlruns --host 0.0.0.0 --port 5000
+
+  # 🔵 Prometheus
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+
+  # 🟠 Grafana
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    volumes:
+      - grafana-data:/var/lib/grafana
+    depends_on:
+      - prometheus
+
+volumes:
+  grafana-data:
+
+networks:
+  default:
+    name: mlfast-net

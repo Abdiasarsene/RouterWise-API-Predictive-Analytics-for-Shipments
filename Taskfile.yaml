@@ -1,0 +1,72 @@
+version: '3'
+
+env:
+  COMPOSE_FILE: docker-compose.yml
+  MLFLOW_TRACKING_URI: http://mlflow:5000
+
+tasks:
+  build:
+    desc: "🛠️ Build des images Docker"
+    cmds:
+      - docker compose build
+
+  up:
+    desc: "🚀 Lancer tous les services (API, MLflow, Prometheus, Grafana)"
+    cmds:
+      - docker compose up -d
+
+  down:
+    desc: "🛑 Arrêter tous les services"
+    cmds:
+      - docker compose down
+
+  restart:
+    desc: "♻️ Redémarrer tous les services"
+    cmds:
+      - task down
+      - task up
+
+  logs:
+    desc: "📄 Voir les logs de tous les services"
+    cmds:
+      - docker compose logs -f --tail=50
+
+  api:
+    desc: "🔁 Redémarrer uniquement l’API"
+    cmds:
+      - docker compose restart api
+
+  mlflow:
+    desc: "📊 Lancer seulement le serveur MLflow"
+    cmds:
+      - docker compose up -d mlflow
+
+  grafana:
+    desc: "📈 Lancer seulement Grafana"
+    cmds:
+      - docker compose up -d grafana
+
+  prometheus:
+    desc: "🔍 Lancer seulement Prometheus"
+    cmds:
+      - docker compose up -d prometheus
+
+  clean:
+    desc: "🧹 Supprimer tous les containers et volumes"
+    cmds:
+      - docker compose down -v --remove-orphans
+
+  status:
+    desc: "📌 Voir l’état de tous les containers"
+    cmds:
+      - docker compose ps
+
+  shell-api:
+    desc: "💻 Ouvrir un shell dans le conteneur API"
+    cmds:
+      - docker compose exec api sh
+
+  health-check:
+    desc: "🚀 Tester l’endpoint /health"
+    cmds:
+      - curl http://localhost:8000/health
