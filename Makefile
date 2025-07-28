@@ -7,6 +7,11 @@ mlflow_server:
 	@echo "Lancement de MLflow"
 	@mlflow ui
 
+# ====== ACCEDER AUX MODELS BENTOML ======
+bentoml :
+	@echo Acces a la base des modèles
+	@py -m bentoml models list
+
 # ====== LANCER PIPELINE AVEC PROFILING SNAKEVIZ======
 train:
 	@echo Execution du pipeline avec profiling SnakeViz...

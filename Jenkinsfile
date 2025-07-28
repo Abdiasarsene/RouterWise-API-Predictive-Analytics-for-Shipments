@@ -1,5 +1,17 @@
 pipeline {
     agent any
+    stages {
+        stage('Who am I') {
+            steps {
+                sh 'whoami && id && groups'
+            }
+        }
+    }
+}
+
+
+pipeline {
+    agent any
 
     environment {
         COMPOSE_FILE = 'docker-compose.yml'
