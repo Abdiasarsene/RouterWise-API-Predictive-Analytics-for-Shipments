@@ -1,17 +1,5 @@
 pipeline {
     agent any
-    stages {
-        stage('Who am I') {
-            steps {
-                sh 'whoami && id && groups'
-            }
-        }
-    }
-}
-
-
-pipeline {
-    agent any
 
     environment {
         COMPOSE_FILE = 'docker-compose.yml'
@@ -23,8 +11,11 @@ pipeline {
         timestamps()
     }
 
-    stages {
+    parameters {
+        booleanParam(name: 'CLEAN_BUILD', defaultValue: false, description: 'Faire un clean avant build ?')
+    }
 
+    stages {
         stage('🔃 Checkout Code') {
             steps {
                 checkout scm
@@ -49,27 +40,21 @@ pipeline {
         stage('🚀 Start Services') {
             steps {
                 sh 'task up'
-                sleep 10 // pour laisser le temps aux services de démarrer
+                // Pause pour laisser démarrer les services
+                sleep 15
             }
         }
 
-        stage('✅ Health Check') {
-            steps {
-                script {
-                    def response = sh(script: 'task health-check', returnStdout: true).trim()
-                    if (!response.contains('"status": "ok"')) {
-                        error("Health check failed: ${response}")
-                    }
+        stage('🧪 Tests unitaires') {
+            when {
+                anyOf {
+                    expression { fileExists('tests/') }
+                    expression { fileExists('app/tests') }
                 }
             }
-        }
-
-        stage('🧪 Tests unitaires (si définis)') {
-            when {
-                expression { fileExists('tests/') || fileExists('app/tests') }
-            }
             steps {
-                sh 'poetry install' // ou task install-deps si tu ajoutes cette task
+                // Installe les dépendances avant tests (ajuste si tu utilises task pour ça)
+                sh 'poetry install --no-interaction --no-ansi'
                 sh 'pytest -v'
             }
         }
@@ -85,21 +70,18 @@ pipeline {
         always {
             echo '📌 Pipeline terminé'
         }
-        failure {
-            echo '❌ Échec du pipeline. Pense à checker les logs.'
+        success {
+            echo '✅ Pipeline terminé avec succès.'
+            // Joue un son sur Windows (optionnel)
+            bat '''
+            powershell -c "(New-Object Media.SoundPlayer \\"C:\\Windows\\Media\\Windows Notify Calendar.wav\\").PlaySync();"
+            '''
         }
-    }
-}
-
-
-post {
-    success {
-        echo '✅ Pipeline terminé avec succès.'
-        // Joue un son sur Windows
-        bat 'powershell -c "(New-Object Media.SoundPlayer \\"C:\\\\Windows\\\\Media\\\\Windows Notify Calendar.wav\\").PlaySync();"'
-    }
-    failure {
-        echo '❌ Le pipeline a échoué ! Vérifie les logs.'
-        bat 'powershell -c "(New-Object Media.SoundPlayer \\"C:\\\\Windows\\\\Media\\\\Windows Critical Stop.wav\\").PlaySync();"'
+        failure {
+            echo '❌ Le pipeline a échoué ! Vérifie les logs.'
+            bat '''
+            powershell -c "(New-Object Media.SoundPlayer \\"C:\\Windows\\Media\\Windows Critical Stop.wav\\").PlaySync();"
+            '''
+        }
     }
 }

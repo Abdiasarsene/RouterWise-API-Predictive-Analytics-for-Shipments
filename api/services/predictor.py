@@ -1,9 +1,8 @@
 # Importation des librairies nécessaires
 import logging
-import traceback
 import pandas as pd
 from fastapi import HTTPException
-from .monitor import increment_inference_count
+from ..monitor import increment_inference_count
 
 # ====== LOGGING ======
 logging.basicConfig(level=logging.INFO)
@@ -29,10 +28,10 @@ def make_prediction(model, model_type: str, input_dict: dict) -> tuple:
             predicted_class = int(prediction[0])
             message = format_message(predicted_class)
             increment_inference_count()
-            logger.info('🚀 Prédiction faite')
+            logger.info('🚀🏆🚀🟢🚀')
             return predicted_class, message
         
     except Exception as e:
         logger.error(f"Erreur de prédiction : {e}")
-        logger.debug(f"Traceback : \n{traceback.format_exc()}")
+        logger.exception("Stack trace :")
         raise HTTPException(status_code=500, detail="Modèle non initialisé correctement")

@@ -1,9 +1,7 @@
 from fastapi import FastAPI, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 from starlette.middleware.cors import CORSMiddleware
-from starlette.middleware.httpsredirect import HTTPSRedirectMiddleware
 from starlette.middleware.trustedhost import TrustedHostMiddleware
-import traceback
 import logging
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
@@ -15,7 +13,7 @@ logger = logging.getLogger(__name__)
 # === Middleware Setup ===
 def apply_security_middleware(app: FastAPI):
     try:
-        app.add_middleware(HTTPSRedirectMiddleware)
+        # app.add_middleware(HTTPSRedirectMiddleware)
 
         app.add_middleware(
             CORSMiddleware,
@@ -32,7 +30,7 @@ def apply_security_middleware(app: FastAPI):
         logger.info("✅ Security middleware applied successfully.")
     except Exception as e:  
         logger.error(f"❌ Error applying security middleware: {str(e)}")
-        logger.debug("Traceback: \n%s", traceback.format_exc())
+        logger.exception("Stack trace : ")
         raise HTTPException(status_code=500, detail="Middleware setup failed")  
 
 # === Token Checker (Optional) ===
@@ -48,4 +46,4 @@ def verify_token(token: str = Depends(oauth2_scheme)):
         return {"user": "authenticated"}
     except Exception as e: 
         logger.error(f"Erreur détectée : {str(e)}")
-        logger.debug(f"Traceback complet : \n{traceback.format_exc()}")
+        logger.exception("Stack trace : ")

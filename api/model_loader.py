@@ -2,8 +2,7 @@
 import logging
 import mlflow
 import bentoml
-import traceback
-from .config import settings
+from api.config import settings
 
 # ====== LOGGING ======
 logging.basicConfig(level=logging.INFO)
@@ -12,17 +11,21 @@ logger = logging.getLogger(__name__)
 # ====== FONCTIONS DE CHARGEMENT DU MODELE MLFLOW ======
 def load_mlflow_model(path):
     try:
-        logger.info(f"🔄 Chargement MLflow depuis: {path}")
-        mlflow.set_tracking_uri(settings.api_mlflow_tracking_uri)
+        logger.info("🚀 Connexion à MLflow")
+        mlflow.set_tracking_uri(settings.tracking_uri)
+        logger.info(f"🔗 MLflow Tracking URI utilisé : {settings.tracking_uri}")
+
         model = mlflow.pyfunc.load_model(path)
         if model is None:
             raise RuntimeError("⚠️ Échec MLflow.")
+        
+        logger.info("✅ Modèle chargé avec succès.")
         return model
     
     except Exception as e:
-        logger.error(f"Erreur lors du chargement du modèle MLflow : {str(e)}")
-        logger.debug("Traceback complet : \n%s", traceback.format_exc())
-        raise RuntimeError("⚠️ Échec du chargement du modèle MLflow.") from e
+        logger.error(f"❌ Erreur via MLflow : {str(e)}")
+        logger.exception("Stack trace : ")
+        raise RuntimeError("⚠️ Échec via MLflow.") from e
 
 # ====== FONCTION DE CHARGEMENT DU MODELE BENTOML ======
 def load_bentoml_model(tag):
@@ -34,6 +37,6 @@ def load_bentoml_model(tag):
         return model
     
     except Exception as e:
-        logger.error(f"Erreur lors du chargement du modèle BentoML : {str(e)}")
-        logger.debug("Traceback complet : \n%s", traceback.format_exc())
-        raise RuntimeError("⚠️ Échec du chargement du modèle BentoML.") from e  
+        logger.error(f"Erreur via BentoML : {str(e)}")
+        logger.exception("Stack trace :")
+        raise RuntimeError("⚠️ Échec via BentoML.") from e  

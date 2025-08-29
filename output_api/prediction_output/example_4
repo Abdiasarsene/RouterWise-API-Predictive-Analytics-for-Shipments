@@ -1,0 +1,6 @@
+{
+    "Deliver Status":"Your delivery status prediction is: Unknown. Stay informed and plan accordingly!",
+    "Code":2,
+    "Statut":"Success",
+    "Model Used":"MLflow"
+}

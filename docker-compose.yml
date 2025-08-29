@@ -11,8 +11,12 @@ services:
     environment:
       - PYTHONUNBUFFERED=1
       - POETRY_VIRTUALENVS_CREATE=false
+    env_file:
+      - .env
+      - .env.docker
     volumes:
-      - ./api:/app/api  # Développement live (facultatif)
+      - ./api:/app/api
+      - ./mlruns:/mlflow/mlruns
     depends_on:
       - mlflow
       - prometheus
@@ -39,7 +43,7 @@ services:
     ports:
       - "9090:9090"
     volumes:
-      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
     command:
       - --config.file=/etc/prometheus/prometheus.yml
 

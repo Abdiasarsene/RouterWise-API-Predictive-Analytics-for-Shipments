@@ -1,32 +1,38 @@
-.PHONY: mlflow_server train run tests format type_check coverage check-all prometheus build run profile logs
-PROFILE_FILE=trainer_profile.prof
+.PHONY: mlflow bentoml train api radon format mypy bandit
 
-# LANCEMENT DU PIPELINE D'ENTRAINEMENT + PREDICTION + SAUVERGADE + API
+# Directories
+PROFILE_FILE=trainer_profile.prof
+TRAINER_DIR=trainer
+API_DIR=api
+
+# ======= DEFAUL PIPELINE ======
+default: format radon bandit mypy
+	@echo "Default pipeline done"
+
 # ====== LANCER MLFLOW ======
-mlflow_server:
+mlflow:
 	@echo "Lancement de MLflow"
 	@mlflow ui
 
 # ====== ACCEDER AUX MODELS BENTOML ======
 bentoml :
 	@echo Acces a la base des modèles
-	@py -m bentoml models list
+	@python -m bentoml models list
 
 # ====== LANCER PIPELINE AVEC PROFILING SNAKEVIZ======
 train:
 	@echo Execution du pipeline avec profiling SnakeViz...
 	python runner.py
-	snakeviz $(PROFILE_FILE)
 
 # ====== LANCER L'API ======
-runlocal:
+api:
 	@echo "Lancement de l'API..."
-	@uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+	@uvicorn main:app --host 0.0.0.0 --port 8000 --workers 1
 
-# ====== LANCER TOUS LES TESTS ======
-tets: 
-	@echo "Lancement de tous les tests..."
-	pytest
+# ====== LANCER L'ANALYSE CYCLOMATIQUE ======
+radon: 
+	@echo "Analyse cyclomatique"
+	@radon mi $(TRAINER_DIR)/ $(API_DIR)/ -s
 
 # ====== LINTING + FORMATAGE ======
 format :
@@ -34,37 +40,17 @@ format :
 	@ruff check . --fix
 
 # ====== MYPY ======
-type_check :
+mypy :
 	@echo "Type Checking"
-	mypy .
+	@mypy --config mypy.ini
 
-# ====== COVERAGE ======
-coverage:
-	@echo "Coverage Report"
-	coverage run -m pytest
-	coverage report -m	
-	coverage html
-
-check-all : test format type_check coverage
-	@echo "Tous les checks sont passes"
+# ====== ANALYSE DU CODE ======
+bandit:
+	@echo "Analyse du code"
+	@bandit -r $(TRAINER_DIR)/ $(API_DIR)/ -ll
 
 # ====== LANCER PROMETHEUS =====
 .PHONY: prometheus
 prometheus : 
 	@echo : "Lancement de Prometheus"
 	@cd "C:\Program Files\Prometheus"
-
-
-
-# ====== DOCKER COMMANDES TRAINERS ======
-build:
-	docker build -t trainer-service ./trainer
-
-run:
-	docker run --rm trainer-service
-
-profile:
-	docker run --rm trainer-service viztracer runner.py
-
-logs:
-	docker logs trainer-service

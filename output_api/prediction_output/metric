@@ -1,0 +1,148 @@
+# HELP python_gc_objects_collected_total Objects collected during gc
+# TYPE python_gc_objects_collected_total counter
+python_gc_objects_collected_total{generation="0"} 5264.0
+python_gc_objects_collected_total{generation="1"} 5108.0
+python_gc_objects_collected_total{generation="2"} 1182.0
+# HELP python_gc_objects_uncollectable_total Uncollectable objects found during GC
+# TYPE python_gc_objects_uncollectable_total counter
+python_gc_objects_uncollectable_total{generation="0"} 0.0
+python_gc_objects_uncollectable_total{generation="1"} 0.0
+python_gc_objects_uncollectable_total{generation="2"} 0.0
+# HELP python_gc_collections_total Number of times this generation was collected
+# TYPE python_gc_collections_total counter
+python_gc_collections_total{generation="0"} 669.0
+python_gc_collections_total{generation="1"} 60.0
+python_gc_collections_total{generation="2"} 5.0
+# HELP python_info Python platform information
+# TYPE python_info gauge
+python_info{implementation="CPython",major="3",minor="12",patchlevel="5",version="3.12.5"} 1.0
+# HELP ml_model_inference_total Nombre total d'inférences réalisées par le modèle
+# TYPE ml_model_inference_total counter
+ml_model_inference_total 10.0
+# HELP ml_model_inference_created Nombre total d'inférences réalisées par le modèle
+# TYPE ml_model_inference_created gauge
+ml_model_inference_created 1.7564256073788903e+09
+# HELP failed_requests_total Nombre total de requêtes ayant échoué
+# TYPE failed_requests_total counter
+failed_requests_total 0.0
+# HELP failed_requests_created Nombre total de requêtes ayant échoué
+# TYPE failed_requests_created gauge
+failed_requests_created 1.7564256073788903e+09
+# HELP successful_requests_total Nombre total de requêtes traitées avec succès
+# TYPE successful_requests_total counter
+successful_requests_total 14.0
+# HELP successful_requests_created Nombre total de requêtes traitées avec succès
+# TYPE successful_requests_created gauge
+successful_requests_created 1.7564256073788903e+09
+# HELP request_duration_seconds Temps de traitement de chaque requête
+# TYPE request_duration_seconds histogram
+request_duration_seconds_bucket{le="0.005"} 8.0
+request_duration_seconds_bucket{le="0.01"} 9.0
+request_duration_seconds_bucket{le="0.025"} 9.0
+request_duration_seconds_bucket{le="0.05"} 14.0
+request_duration_seconds_bucket{le="0.075"} 14.0
+request_duration_seconds_bucket{le="0.1"} 14.0
+request_duration_seconds_bucket{le="0.25"} 14.0
+request_duration_seconds_bucket{le="0.5"} 14.0
+request_duration_seconds_bucket{le="0.75"} 14.0
+request_duration_seconds_bucket{le="1.0"} 14.0
+request_duration_seconds_bucket{le="2.5"} 14.0
+request_duration_seconds_bucket{le="5.0"} 14.0
+request_duration_seconds_bucket{le="7.5"} 14.0
+request_duration_seconds_bucket{le="10.0"} 14.0
+request_duration_seconds_bucket{le="+Inf"} 14.0
+request_duration_seconds_count 14.0
+request_duration_seconds_sum 0.20932483673095703
+# HELP request_duration_seconds_created Temps de traitement de chaque requête
+# TYPE request_duration_seconds_created gauge
+request_duration_seconds_created 1.7564256073788903e+09
+# HELP http_requests_total Total number of requests by method, status and handler.
+# TYPE http_requests_total counter
+http_requests_total{handler="/v1/validate",method="POST",status="2xx"} 8.0
+http_requests_total{handler="/v1/predict",method="POST",status="2xx"} 5.0
+http_requests_total{handler="none",method="GET",status="4xx"} 1.0
+# HELP http_requests_created Total number of requests by method, status and handler.
+# TYPE http_requests_created gauge
+http_requests_created{handler="/v1/validate",method="POST",status="2xx"} 1.7564267723669949e+09
+http_requests_created{handler="/v1/predict",method="POST",status="2xx"} 1.756427633563335e+09
+http_requests_created{handler="none",method="GET",status="4xx"} 1.7564288618870568e+09
+# HELP http_request_size_bytes Content length of incoming requests by handler. Only value of header is respected. Otherwise ignored. No percentile calculated. 
+# TYPE http_request_size_bytes summary
+http_request_size_bytes_count{handler="/v1/validate"} 8.0
+http_request_size_bytes_sum{handler="/v1/validate"} 2502.0
+http_request_size_bytes_count{handler="/v1/predict"} 5.0
+http_request_size_bytes_sum{handler="/v1/predict"} 1546.0
+http_request_size_bytes_count{handler="none"} 1.0
+http_request_size_bytes_sum{handler="none"} 0.0
+# HELP http_request_size_bytes_created Content length of incoming requests by handler. Only value of header is respected. Otherwise ignored. No percentile calculated. 
+# TYPE http_request_size_bytes_created gauge
+http_request_size_bytes_created{handler="/v1/validate"} 1.7564267723669949e+09
+http_request_size_bytes_created{handler="/v1/predict"} 1.756427633563335e+09
+http_request_size_bytes_created{handler="none"} 1.7564288618870568e+09
+# HELP http_response_size_bytes Content length of outgoing responses by handler. Only value of header is respected. Otherwise ignored. No percentile calculated. 
+# TYPE http_response_size_bytes summary
+http_response_size_bytes_count{handler="/v1/validate"} 8.0
+http_response_size_bytes_sum{handler="/v1/validate"} 2854.0
+http_response_size_bytes_count{handler="/v1/predict"} 5.0
+http_response_size_bytes_sum{handler="/v1/predict"} 755.0
+http_response_size_bytes_count{handler="none"} 1.0
+http_response_size_bytes_sum{handler="none"} 22.0
+# HELP http_response_size_bytes_created Content length of outgoing responses by handler. Only value of header is respected. Otherwise ignored. No percentile calculated. 
+# TYPE http_response_size_bytes_created gauge
+http_response_size_bytes_created{handler="/v1/validate"} 1.7564267723669949e+09
+http_response_size_bytes_created{handler="/v1/predict"} 1.756427633563335e+09
+http_response_size_bytes_created{handler="none"} 1.7564288618870568e+09
+# HELP http_request_duration_highr_seconds Latency with many buckets but no API specific labels. Made for more accurate percentile calculations. 
+# TYPE http_request_duration_highr_seconds histogram
+http_request_duration_highr_seconds_bucket{le="0.01"} 9.0
+http_request_duration_highr_seconds_bucket{le="0.025"} 9.0
+http_request_duration_highr_seconds_bucket{le="0.05"} 14.0
+http_request_duration_highr_seconds_bucket{le="0.075"} 14.0
+http_request_duration_highr_seconds_bucket{le="0.1"} 14.0
+http_request_duration_highr_seconds_bucket{le="0.25"} 14.0
+http_request_duration_highr_seconds_bucket{le="0.5"} 14.0
+http_request_duration_highr_seconds_bucket{le="0.75"} 14.0
+http_request_duration_highr_seconds_bucket{le="1.0"} 14.0
+http_request_duration_highr_seconds_bucket{le="1.5"} 14.0
+http_request_duration_highr_seconds_bucket{le="2.0"} 14.0
+http_request_duration_highr_seconds_bucket{le="2.5"} 14.0
+http_request_duration_highr_seconds_bucket{le="3.0"} 14.0
+http_request_duration_highr_seconds_bucket{le="3.5"} 14.0
+http_request_duration_highr_seconds_bucket{le="4.0"} 14.0
+http_request_duration_highr_seconds_bucket{le="4.5"} 14.0
+http_request_duration_highr_seconds_bucket{le="5.0"} 14.0
+http_request_duration_highr_seconds_bucket{le="7.5"} 14.0
+http_request_duration_highr_seconds_bucket{le="10.0"} 14.0
+http_request_duration_highr_seconds_bucket{le="30.0"} 14.0
+http_request_duration_highr_seconds_bucket{le="60.0"} 14.0
+http_request_duration_highr_seconds_bucket{le="+Inf"} 14.0
+http_request_duration_highr_seconds_count 14.0
+http_request_duration_highr_seconds_sum 0.21705229993676767
+# HELP http_request_duration_highr_seconds_created Latency with many buckets but no API specific labels. Made for more accurate percentile calculations. 
+# TYPE http_request_duration_highr_seconds_created gauge
+http_request_duration_highr_seconds_created 1.7564256073855562e+09
+# HELP http_request_duration_seconds Latency with only few buckets by handler. Made to be only used if aggregation by handler is important. 
+# TYPE http_request_duration_seconds histogram
+http_request_duration_seconds_bucket{handler="/v1/validate",le="0.1",method="POST"} 8.0
+http_request_duration_seconds_bucket{handler="/v1/validate",le="0.5",method="POST"} 8.0
+http_request_duration_seconds_bucket{handler="/v1/validate",le="1.0",method="POST"} 8.0
+http_request_duration_seconds_bucket{handler="/v1/validate",le="+Inf",method="POST"} 8.0
+http_request_duration_seconds_count{handler="/v1/validate",method="POST"} 8.0
+http_request_duration_seconds_sum{handler="/v1/validate",method="POST"} 0.022049999970477074
+http_request_duration_seconds_bucket{handler="/v1/predict",le="0.1",method="POST"} 5.0
+http_request_duration_seconds_bucket{handler="/v1/predict",le="0.5",method="POST"} 5.0
+http_request_duration_seconds_bucket{handler="/v1/predict",le="1.0",method="POST"} 5.0
+http_request_duration_seconds_bucket{handler="/v1/predict",le="+Inf",method="POST"} 5.0
+http_request_duration_seconds_count{handler="/v1/predict",method="POST"} 5.0
+http_request_duration_seconds_sum{handler="/v1/predict",method="POST"} 0.19331609999062493
+http_request_duration_seconds_bucket{handler="none",le="0.1",method="GET"} 1.0
+http_request_duration_seconds_bucket{handler="none",le="0.5",method="GET"} 1.0
+http_request_duration_seconds_bucket{handler="none",le="1.0",method="GET"} 1.0
+http_request_duration_seconds_bucket{handler="none",le="+Inf",method="GET"} 1.0
+http_request_duration_seconds_count{handler="none",method="GET"} 1.0
+http_request_duration_seconds_sum{handler="none",method="GET"} 0.0016861999756656587
+# HELP http_request_duration_seconds_created Latency with only few buckets by handler. Made to be only used if aggregation by handler is important. 
+# TYPE http_request_duration_seconds_created gauge
+http_request_duration_seconds_created{handler="/v1/validate",method="POST"} 1.7564267723669949e+09
+http_request_duration_seconds_created{handler="/v1/predict",method="POST"} 1.756427633563335e+09
+http_request_duration_seconds_created{handler="none",method="GET"} 1.7564288618870568e+09

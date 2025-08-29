@@ -82,19 +82,5 @@ class LogistikData(BaseModel):
 
     # ====== CONFIGURATION DU SCHEMA ======
     class Config:
-        allow_population_by_field_name = True
+        populate_by_name = True
         from_attributes = True
-
-
-# {
-#   "Transportation_Cost": 1500,
-#   "Distance_Km": 2100,
-#   "State": "California",
-#   "Delivery_Urgency": "Critical",
-#   "Urgency_Level": "High",
-#   "Client_Type": "Gallery",
-#   "Carrier_Type": "Specialized",
-#   "Transportation_Method": "Airplane",
-#   "Day_of_Week": "Friday",
-#   "Weather_Condition": "Clear"
-# }

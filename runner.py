@@ -1,16 +1,14 @@
-# runner.py
-
-# ===== Importation des librairies nécessaires =====
+# Importation des librairies nécessaires
 import mlflow
 import logging
 import time
-import cProfile  # Ajout pour profiling
+import cProfile
 from trainer.config import settings
-from trainer.data_loader import load_and_prepare_data
+from trainer.loader.data_loader import load_and_prepare_data
 from trainer.preprocessing import get_preprocessor
 from trainer.training import trainer_models
-from trainer.predEvalSave import evaluate_and_predict
-from trainer.monitoring import (
+from trainer.predictor.predEvalSave import evaluate_and_predict
+from trainer.monitors.monitoring import (
     log_data_overview,
     log_preprocessing_info,
     log_training_info,
@@ -61,11 +59,10 @@ def main():
 
     except Exception as e:
         logger.error(f"❌ Échec du pipeline : {str(e)}", exc_info=True)
-
+        logger.exception("Stack trace : ")
 
 if __name__ == "__main__":
     profiler = cProfile.Profile()
-    profiler.enable()
 
     main()
 

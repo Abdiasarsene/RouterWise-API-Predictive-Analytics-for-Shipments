@@ -1,0 +1,15 @@
+{
+    "Validated Data":{
+        "Transportation_Cost":12000.0,
+        "Distance_Km":3000.0,
+        "State":"Texas",
+        "Delivery_Urgency":"Express",
+        "Urgency_Level":"High",
+        "Client_Type":"Auction_Mouse",
+        "Carrier_Type":"External",
+        "Transportation_Method":"Airplane",
+        "Day_of_Week":"Friday",
+        "Weather_Condition":"Storm"
+    },
+    "Message":"Données conformes au schéma LogistikData.",
+    "Statut":"Success"}

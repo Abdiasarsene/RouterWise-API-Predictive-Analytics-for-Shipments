@@ -42,6 +42,7 @@ def add_monitoring(app: FastAPI):
         logger.info("✅ Monitoring Prometheus activé sur /metrics")
     except Exception as e:
         logger.error(f"❌ Erreur lors de l'ajout du monitoring Prometheus : {str(e)}")
+        logger.exception("Stack trace : ")
 
 # ====== MIDDLEWARE POUR LES METRIQUES MANUELLES ======
 async def metrics_middleware(request: Request, call_next):
@@ -64,3 +65,4 @@ def increment_inference_count():
         logger.debug("📈 Incrémentation de model_inference_count")
     except Exception as e:
         logger.error(f"❌ Erreur lors de l'incrémentation du compteur d'inférence : {str(e)}")
+        logger.exception("Stack trace : ")

@@ -1,0 +1,15 @@
+{
+    "Validated Data":{
+        "Transportation_Cost":8000.0,
+        "Distance_Km":1500.0,
+        "State":"New York",
+        "Delivery_Urgency":"Standard",
+        "Urgency_Level":"Medium",
+        "Client_Type":"Gallery",
+        "Carrier_Type":"Express",
+        "Transportation_Method":"Truck",
+        "Day_of_Week":"Wednesday",
+        "Weather_Condition":"Snow"
+    },
+    "Message":"Données conformes au schéma LogistikData.",
+    "Statut":"Success"}

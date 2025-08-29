@@ -1,11 +1,10 @@
 # Importation des librairies nécessaires
 import asyncio
 import logging
-import traceback
 from fastapi import FastAPI
 
-from .model_loader import load_mlflow_model, load_bentoml_model
-from .config import settings
+from api.model_loader import load_mlflow_model, load_bentoml_model
+from api.config import settings
 
 # ====== LOGGING ======
 logging.basicConfig(level=logging.INFO)
@@ -33,7 +32,7 @@ def register_startup_event(app: FastAPI):
             logger.info("✅ MLflow model loaded.")
         except Exception as e:
             logger.warning(f"❌ MLflow failed: {str(e)}")
-            logger.debug(f"Traceback: \n{traceback.format_exc()}")
+            logger.exception("Stack trace :")
             
             # Chargement du modèle BentoML en fallback
             try:
@@ -43,5 +42,5 @@ def register_startup_event(app: FastAPI):
                 logger.info("✅ BentoML fallback succeeded.")
             except Exception as bentoml_error:
                 logger.critical(f"❌ BentoML failed: {str(bentoml_error)}")
-                logger.debug(f"Traceback: \n{traceback.format_exc()}")
+                logger.exception("Stack trace :")
                 raise RuntimeError(f"All model loading failed: {e} / {bentoml_error}")

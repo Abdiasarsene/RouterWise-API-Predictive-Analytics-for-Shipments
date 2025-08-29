@@ -1,0 +1,14 @@
+{
+    "Validated Data":{
+        "Transportation_Cost":25000.0,
+        "Distance_Km":4000.0,"State":"Florida",
+        "Delivery_Urgency":"Critical",
+        "Urgency_Level":"High",
+        "Client_Type":"Private_Collector",
+        "Carrier_Type":"Specialized",
+        "Transportation_Method":"Train",
+        "Day_of_Week":"Sunday",
+        "Weather_Condition":"Rain"
+    },
+    "Message":"Données conformes au schéma LogistikData.",
+    "Statut":"Success"}

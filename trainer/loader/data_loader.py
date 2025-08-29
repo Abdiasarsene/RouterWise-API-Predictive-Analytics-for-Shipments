@@ -2,7 +2,7 @@
 import logging
 import traceback
 import pandas as pd
-from .config import settings
+from ..config import settings
 from sklearn.preprocessing import LabelEncoder
 from sklearn.model_selection import train_test_split
 

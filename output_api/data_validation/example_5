@@ -1,0 +1,16 @@
+{
+    "Validated Data":{
+        "Transportation_Cost":3500.0,
+        "Distance_Km":2800.0,
+        "State":"Ohio",
+        "Delivery_Urgency":"Standard",
+        "Urgency_Level":"Low",
+        "Client_Type":"Museum",
+        "Carrier_Type":"Internal",
+        "Transportation_Method":"Train",
+        "Day_of_Week":"Saturday",
+        "Weather_Condition":"Fog"
+    },
+    "Message":"Données conformes au schéma LogistikData.",
+    "Statut":"Success"
+}

@@ -8,17 +8,17 @@ tasks:
   build:
     desc: "🛠️ Build des images Docker"
     cmds:
-      - docker compose build
+      - docker compose -f $COMPOSE_FILE build
 
   up:
     desc: "🚀 Lancer tous les services (API, MLflow, Prometheus, Grafana)"
     cmds:
-      - docker compose up -d
+      - docker compose -f $COMPOSE_FILE up -d
 
   down:
     desc: "🛑 Arrêter tous les services"
     cmds:
-      - docker compose down
+      - docker compose -f $COMPOSE_FILE down
 
   restart:
     desc: "♻️ Redémarrer tous les services"
@@ -29,44 +29,69 @@ tasks:
   logs:
     desc: "📄 Voir les logs de tous les services"
     cmds:
-      - docker compose logs -f --tail=50
+      - docker compose -f $COMPOSE_FILE logs -f --tail=50
 
   api:
     desc: "🔁 Redémarrer uniquement l’API"
     cmds:
-      - docker compose restart api
+      - docker compose -f $COMPOSE_FILE restart api
 
   mlflow:
     desc: "📊 Lancer seulement le serveur MLflow"
     cmds:
-      - docker compose up -d mlflow
+      - docker compose -f $COMPOSE_FILE up -d mlflow
 
   grafana:
     desc: "📈 Lancer seulement Grafana"
     cmds:
-      - docker compose up -d grafana
+      - docker compose -f $COMPOSE_FILE up -d grafana
 
   prometheus:
     desc: "🔍 Lancer seulement Prometheus"
     cmds:
-      - docker compose up -d prometheus
+      - docker compose -f $COMPOSE_FILE up -d prometheus
 
   clean:
     desc: "🧹 Supprimer tous les containers et volumes"
     cmds:
-      - docker compose down -v --remove-orphans
+      - docker compose -f $COMPOSE_FILE down -v --remove-orphans
+
+  clean-all:
+    desc: "🧨 Supprimer tous les conteneurs, volumes et images non utilisées"
+    cmds:
+      - docker compose -f $COMPOSE_FILE down -v --remove-orphans
+      - docker image prune -f
 
   status:
     desc: "📌 Voir l’état de tous les containers"
     cmds:
-      - docker compose ps
+      - docker compose -f $COMPOSE_FILE ps
 
   shell-api:
     desc: "💻 Ouvrir un shell dans le conteneur API"
     cmds:
-      - docker compose exec api sh
+      - docker compose -f $COMPOSE_FILE exec api sh
 
-  health-check:
-    desc: "🚀 Tester l’endpoint /health"
+  show-env:
+    desc: "🔍 Afficher les variables d’environnement courantes"
     cmds:
-      - curl http://localhost:8000/health
+      - printenv | grep -E 'MLFLOW|ENV_MODE|API'
+
+  test:
+    desc: "🧪 Lancer les tests (Docker)"
+    deps: [build]
+    cmds:
+      - docker compose -f $COMPOSE_FILE run --rm api pytest
+
+  debug:
+    desc: "🔍 Debug: containers + ports"
+    cmds:
+      - docker ps
+      - docker compose -f $COMPOSE_FILE ps
+      - docker compose -f $COMPOSE_FILE logs --tail=30
+
+  reload-env:
+    desc: "♻️ Recharger les fichiers .env dans les conteneurs (down + up)"
+    cmds:
+      - task down
+      - task up

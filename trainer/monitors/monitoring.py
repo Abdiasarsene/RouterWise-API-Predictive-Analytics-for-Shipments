@@ -26,7 +26,6 @@ def log_data_overview(df):
         logger.error(f"Erreur lors de l'enregistrement de l'aperçu des données : {str(e)}")
         logger.debug(f"Traceback complet : \n{traceback.format_exc()}")
 
-
 # ====== OUTLIERS ======
 def log_outliers(outlier_count):
     mlflow.log_metric("outlier_count", outlier_count)
@@ -69,10 +68,12 @@ def log_prediction_info(evaluation_results):
                 mlflow.log_params(model.get_params())
                 logger.info(f"✅ Modèle {model_name} suivi avec MLflow.")
 
+                # Log Metrics
                 for metric_name, value in metrics.items():
                     mlflow.log_metric(metric_name, value)
                 logger.info("📊 Metriques suivi avec MLflow")
-
+                
+                # Backup MLFLOW
                 mlflow.sklearn.log_model(model, model_name)
                 logger.info(f"✅ Modèle {model_name} loggé avec MLflow.")
 
