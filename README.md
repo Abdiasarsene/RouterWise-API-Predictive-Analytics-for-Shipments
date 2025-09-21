@@ -1,4 +1,4 @@
-# **RouterWise — ML-Powered Logistics Optimization for Art Handling**  
+# **RouterWise — ML-Powered Logistics Optimization for Art Handling**    
 ![Ray Serve](https://img.shields.io/badge/Ray_Serve-00AEEF?style=for-the-badge&logo=ray&logoColor=white) ![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=for-the-badge&logo=fastapi&logoColor=white) ![MLflow](https://img.shields.io/badge/MLflow-FF4F00?style=for-the-badge&logo=mlflow&logoColor=white) ![BentoML](https://img.shields.io/badge/BentoML-FF6F61?style=for-the-badge&logo=bentoml&logoColor=white) ![Prometheus](https://img.shields.io/badge/Prometheus-E6522C?style=for-the-badge&logo=prometheus&logoColor=white) ![Grafana](https://img.shields.io/badge/Grafana-F46800?style=for-the-badge&logo=grafana&logoColor=white) ![Jenkins](https://img.shields.io/badge/Jenkins-D24939?style=for-the-badge&logo=jenkins&logoColor=white) ![Postman](https://img.shields.io/badge/Postman-FF6C37?style=for-the-badge&logo=postman&logoColor=white)
 
 *"Art logistics is not just about moving objects — it's about preserving legacy. RouterWise predicts optimal shipment paths, anticipates risks, and ensures precision in handling priceless artworks. Built for institutions that value both efficiency and integrity."*
@@ -61,7 +61,7 @@
 
 ## 🚀 Roadmap
 
-- Integration of **real-time GPS signals** for dynamic rerouting  
+- **Integration** of **real-time GPS signals** for dynamic rerouting  
 - **Multi-agent simulation** for route stress testing  
 - **Federated learning** across logistics partners  
 - **Contractual risk scoring** based on shipment metadata  
@@ -70,8 +70,6 @@
 ---
 
 ## 🏁 Final Note
-
-Parfait, on va rester concis et humble comme ton exemple. Voici une version dans le même esprit :
 
 *"RouterWise shows how a backend can be production-ready while staying modular and strategic. The code is here, the architecture is solid — how far you go next is up to you."*
 
